@@ -1,5 +1,7 @@
 import 'package:easy_shop/common/custom_drawer/custom_drawer.dart';
+import 'package:easy_shop/models/page_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class BaseScreen extends StatelessWidget {
@@ -8,7 +10,9 @@ class BaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
+    return Provider(
+      create: (_) => PageManager(pageController),
+      child: PageView(
       controller: pageController,
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
@@ -27,6 +31,6 @@ class BaseScreen extends StatelessWidget {
           color: Colors.green,
         ),
       ],
-    );
+    ));
   }
 }
