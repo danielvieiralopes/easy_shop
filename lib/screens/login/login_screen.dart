@@ -18,6 +18,17 @@ class LoginScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Entrar'),
           centerTitle: true,
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/signup');
+                },
+                textColor: Colors.white,
+                child: const Text(
+                  'CRIAR CONTA',
+                  style: TextStyle(fontSize: 14),
+                ))
+          ],
         ),
         body: Center(
           child: Card(
@@ -69,32 +80,42 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                           height: 44,
                           child: RaisedButton(
-                            onPressed: () {
-                              if (formKey.currentState.validate()) {
-                               userManager.signIn(
-                                    user: User(
-                                        email: emailController.text,
-                                        password: passController.text),
-                                    onFail: (e) {
-                                      scaffoldKey.currentState
-                                          .showSnackBar(SnackBar(
-                                        content: Text('Falha ao entrar: $e'),
-                                        backgroundColor: Colors.red,
-                                      ));
-                                    },
-                                    onSuccess: () {
-                                      // TODO: FECHAR TELA DE LOGIN
-                                    });
-                              }
-                            },
+                            onPressed: userManager.loading
+                                ? null
+                                : () {
+                                    if (formKey.currentState.validate()) {
+                                      userManager.signIn(
+                                          user: User(
+                                              email: emailController.text,
+                                              password: passController.text),
+                                          onFail: (e) {
+                                            scaffoldKey.currentState
+                                                .showSnackBar(SnackBar(
+                                              content:
+                                                  Text('Falha ao entrar: $e'),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                          },
+                                          onSuccess: () {
+                                            // TODO: FECHAR TELA DE LOGIN
+                                          });
+                                    }
+                                  },
                             color: Theme.of(context).primaryColor,
+                            disabledColor:
+                                Theme.of(context).primaryColor.withAlpha(100),
                             textColor: Colors.white,
-                            child: const Text(
-                              'Entrar',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
+                            child: userManager.loading
+                                ? const CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white),
+                                  )
+                                : const Text(
+                                    'Entrar',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                  ),
                           ))
                     ],
                   );
