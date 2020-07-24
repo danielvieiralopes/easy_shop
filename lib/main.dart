@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:easy_shop/models/user_manager.dart';
 import 'package:easy_shop/screens/base/base_screen.dart';
 import 'package:easy_shop/screens/signup/signup_screen.dart';
@@ -8,10 +8,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MyApp());
 
-  Firestore.instance
-      .collection('pedidos')
-      .document('#00001')
-      .setData({'preco': 199.99, 'usuario': 'Daniel Vieira'});
+ 
 }
 
 class MyApp extends StatelessWidget {
