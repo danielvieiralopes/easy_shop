@@ -22,6 +22,23 @@ class UserManager extends ChangeNotifier {
       final AuthResult result = await auth.signInWithEmailAndPassword(
           email: user.email, password: user.password);
 
+      user.id = result.user.uid;
+
+     await user.saveData();
+
+      onSuccess();
+    } on PlatformException catch (e) {
+      onFail(getErrorString(e.code));
+    }
+    loading = false;
+  }
+
+  Future<void> signUp({User user, Function onFail, Function onSuccess}) async {
+    loading = true;
+    try {
+      final AuthResult result = await auth.createUserWithEmailAndPassword(
+          email: user.email, password: user.password);
+
       this.user = result.user;
 
       onSuccess();
@@ -40,6 +57,7 @@ class UserManager extends ChangeNotifier {
     final FirebaseUser currentUser = await auth.currentUser();
     if (currentUser != null) {
       user = currentUser;
+      debugPrint(user.uid);
     }
     notifyListeners();
     debugPrint(user.uid);
