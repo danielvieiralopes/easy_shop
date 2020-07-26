@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
           create: (_) => UserManager(),
           lazy: false,
           ),
-          Provider(
+          
+          ChangeNotifierProvider(
             create: (_) => ProductManager(),
             lazy: false,
             )

@@ -31,7 +31,12 @@ class BaseScreen extends StatelessWidget {
             title: const Text('Home3'),
           ),
         ),
-        
+        Scaffold(
+            drawer: CustomDrawer(),
+            appBar: AppBar(
+              title: const Text('Home4'),
+            ),
+        )  
       ],
     ));
   }
