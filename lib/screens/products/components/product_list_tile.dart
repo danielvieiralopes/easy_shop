@@ -9,7 +9,11 @@ class ProductListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).pushNamed('/product', arguments: product);
+      },
+      child: Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4)
         ),
@@ -61,6 +65,6 @@ class ProductListTile extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
